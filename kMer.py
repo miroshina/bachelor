@@ -1,33 +1,20 @@
 #! /usr/bin/python
 
-import sys
-import subprocess
 from datetime import datetime
 from sklearn import preprocessing
 import Bio
-from Bio import SeqIO, SeqUtils,bgzf
+from Bio import SeqUtils
 from Bio.SeqUtils import lcc
-import gzip
 import math
 import pandas as pd
-import datatable as dt
 import os
-import random
-import seaborn as sn
 import numpy as np
 from numpy import mean
 from numpy import std
 from numpy import absolute
-from sklearn import metrics
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import ElasticNet
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import RepeatedKFold
 from sklearn.model_selection import cross_val_score
-from numpy import arange
 
 class Kmers(object):
 
@@ -39,7 +26,8 @@ class Kmers(object):
         self.pathwayMatrix = pd.DataFrame()
         self.pathToSamples = pathToSamples
         self.kmerMatrix = pd.DataFrame()
-
+        
+    # overwrite
     def create_count_table(self, listOfKmerCountFiles, nsamples):
         kmerDB = {}
         pf = pd.DataFrame()
@@ -227,8 +215,6 @@ class Kmers(object):
         end_time = datetime.now()
         print('Duration humann: {}'.format(end_time - start_time))
         self.read_pathcoverage()
-
-
 
 
 if __name__ == "__main__":
