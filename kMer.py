@@ -40,55 +40,6 @@ class Kmers(object):
         self.pathToSamples = pathToSamples
         self.kmerMatrix = pd.DataFrame()
 
-    def brake(self):
-
-        return "%s braking" % self.vtype
-
-    def overlapping_windows(self,sequence, L):
-        windows = []
-        for index, residue in enumerate(sequence):
-            if (index + L) < (len(sequence) + 1):
-                window = sequence[index:L + index]
-                windows.append(window)
-        return windows
-
-    def sequence_to_repvec(self,sequence, N):
-        encountered_residues = set()
-        repvec = []
-        for residue in sequence:
-            if residue not in encountered_residues:
-                residue_count = sequence.count(residue)
-                repvec.append(residue_count)
-                encountered_residues.add(residue)
-            if len(encountered_residues) == N:
-                break
-        while len(repvec) < N:
-            repvec.append(0)
-        return sorted(repvec, reverse=True)
-
-    def sequence_entropy(self,sequence, N):
-        repvec = self.sequence_to_repvec(sequence, N)
-        L = len(sequence)
-        entropy = 0
-        for n in repvec:
-            if n != 0:
-                entropy += -1 * ((n / L) * math.log((n / L), N))
-        return entropy
-
-    def sequence_entropy(self,sequence, N):
-        repvec = self.sequence_to_repvec(sequence, N)
-        L = len(sequence)
-        entropy = sum([-1 * (n / L) * math.log((n / L), N) for n in repvec if n != 0])
-        return entropy
-
-    def get_minimizer(self,sub_f, length, m):
-        min = "ZZZZZZZZZZZZZ"
-        for j in range(0, length - m + 1):
-            sub2 = sub_f[j:j + m]
-            if sub2 < min:
-                min = sub2
-        return min
-
     def create_count_table(self, listOfKmerCountFiles, nsamples):
         kmerDB = {}
         pf = pd.DataFrame()
